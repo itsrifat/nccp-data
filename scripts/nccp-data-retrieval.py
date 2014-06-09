@@ -7,6 +7,7 @@ import time
 import monthdelta
 from datetime import timedelta
 from dateutil import rrule
+import os
 
 measurementsUri = 'http://sensor.nevada.edu/Services/Measurements/Measurement.svc'
 dataRetrievalUri = 'http://sensor.nevada.edu/Services/DataRetrieval/DataRetrieval.svc'
@@ -81,7 +82,11 @@ def dateStrToISODate(dateStr,timeZone):
 	return dt.isoformat()
 
 def dumpData(filename,sensorMetadata,timeZoneMetadata,data):
-	with open(filename,'w') as f:
+	directoryName = "data" #directory where all the files are stored
+	if not os.path.exists(directoryName):
+	    os.makedirs(directoryName)
+
+	with open(os.path.join(directoryName, filename+'.csv'),'w') as f:
 		#put the metada at first
 		f.write('Site:'+sensorMetadata['Deployment']['Site']['Name']+'\n')
 		f.write('Deployment:'+sensorMetadata['Deployment']['Name']+'\n')
@@ -105,28 +110,41 @@ def getDataMonthly(startYear,startMonth,endYear,endMonth,logicalSensors):
 	#iterate through each month ()
 	for dt in rrule.rrule(rrule.MONTHLY, dtstart=datetime(startYear,startMonth,1,0,0,0), until=datetime(endYear,endMonth,1,1,1)):
 	    #starting time (example 2014-01-01 00:00:00)
-	    startTime = getUTCTimestamp(dt)
+	    startDate = dt
+	    endDate = dt+monthdelta.MonthDelta(1)- timedelta(minutes=1)
+	    startTime = getUTCTimestamp(startDate)
 	    #ending time (example 2014-01-31 23:59:00)
-	    endTime = getUTCTimestamp(dt+monthdelta.MonthDelta(1)- timedelta(minutes=1))
+	    endTime = getUTCTimestamp(endDate)
 	    #for each sensor get the data for the month
+	    print "Grabbing and dumping all sensor data for month "+str(startDate.strftime("%B"))+' '+str(startDate.year)
 	    for sensor in logicalSensors:
 	    	#get the number of results
 	        numResults = getNumberOfData(startTime,endTime,timeZoneUTC,sensor['Id'],sensor['Unit']['Id'])
 	        if numResults > 0:
 	        	#get the data
 		        data = getData(startTime,endTime,timeZoneUTC,sensor['Id'],sensor['Unit']['Id'],totalResults=numResults)
-		        fileName = str(startTime)+'-'+str(endTime)+'-'+str(sensor['Id'])+'-'+str(sensor['Unit']['Id'])
+		        fileName = str(startDate.year)+'-'+str(startDate.month)+'-'+str(sensor['Id'])+'-'+str(sensor['Unit']['Id'])
 		        #dump the data to a file
 		        dumpData(fileName,sensor,timeZoneUTC,data)
 	       	
 
 
 #This is how we call the getDataMonthly function
-#logicalSensors = getLogicalSensorInfo()
-#getDataMonthly(2014,1,2014,12,logicalSensors)
+
+#Get all the posible sensors
+logicalSensors = getLogicalSensorInfo()
+'''
+Grab data for each month, for each sensor
+dumps the data in a directory named data
+for each month each sensor a csv file is created
+file format is year-month-sensorId-unitId.csv (example 2011-1-1088-96.csv).
+This one gets the data from January 2011 to June 2014.
+'''
+getDataMonthly(2011,1,2014,6,logicalSensors)
 
 
-#Lets check the function with a single logical sensor and data of a single single month 
+#to check the function with a single logical sensor and data of a single single month.
+'''
 logicalSensors = [{
 		"__type" : "LogicalSensor:http://sensor.nevada.edu/Measurement/2012/05",
 		"Deployment" : {
@@ -173,4 +191,6 @@ logicalSensors = [{
 			"Name" : "degree kelvin"
 		}
 }]
-getDataMonthly(2014,1,2014,1,logicalSensors)
+
+getDataMonthly(2014,1,2014,3,logicalSensors)
+'''
