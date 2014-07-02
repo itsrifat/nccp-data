@@ -129,68 +129,69 @@ def getDataMonthly(startYear,startMonth,endYear,endMonth,logicalSensors):
 	       	
 
 
-#This is how we call the getDataMonthly function
 
-#Get all the posible sensors
-logicalSensors = getLogicalSensorInfo()
-'''
-Grab data for each month, for each sensor
-dumps the data in a directory named data
-for each month each sensor a csv file is created
-file format is year-month-sensorId-unitId.csv (example 2011-1-1088-96.csv).
-This one gets the data from January 2011 to June 2014.
-'''
-getDataMonthly(2011,1,2014,6,logicalSensors)
+if __name__ == "__main__":
+	#Get all the posible sensors
+	logicalSensors = getLogicalSensorInfo()
+	
+	'''
+	Grabs data for each month, for each sensor.
+	Dumps the data in a directory named data.
+	For each month each sensor a csv file is created,
+	file format is year-month-sensorId-unitId.csv (example 2011-1-1088-96.csv).
+	This one gets the data from January 2011 to June 2014.
+	'''
+	getDataMonthly(2011,1,2014,6,logicalSensors)
 
 
-#to check the function with a single logical sensor and data of a single single month.
-'''
-logicalSensors = [{
-		"__type" : "LogicalSensor:http://sensor.nevada.edu/Measurement/2012/05",
-		"Deployment" : {
-			"__type" : "MonitoringDeployment:http://sensor.nevada.edu/Measurement/2012/05",
-			"Id" : 204,
-			"LocationWkt" : "POINT (-114.308911645998 38.9061140862817 3353.4096)",
-			"Name" : "Air temperature (10-meter) monitor",
-			"Site" : {
-				"__type" : "MonitoringSite:http://sensor.nevada.edu/Measurement/2012/05",
-				"Id" : 8,
-				"Name" : "Snake Range West Subalpine"
-			}
-		},
-		"Id" : 1088,
-		"LocationWkt" : "POINT (-114.308911645998 38.9061140862817 3353.4096)",
-		"MeasurementInterval" : "PT1M",
-		"MonitoredProperty" : {
-			"__type" : "PhysicalProperty:http://sensor.nevada.edu/Measurement/2012/05",
-			"Description" : "The temperature of the air.",
-			"Id" : 3,
-			"Name" : "Temperature",
-			"System" : {
-				"__type" : "MonitoredSystem:http://sensor.nevada.edu/Measurement/2012/05",
-				"Id" : 4,
-				"Name" : "Atmosphere"
-			}
-		},
-		"SurfaceAltitudeOffset" : 10,
-		"Type" : {
-			"__type" : "MeasurementType:http://sensor.nevada.edu/Measurement/2012/05",
-			"Description" : "The average of a series of automatically-collected sensor measurements over a period of time.",
-			"Id" : 2,
-			"Name" : "Average"
-		},
-		"Unit" : {
-			"__type" : "MeasurementUnit:http://sensor.nevada.edu/Measurement/2012/05",
-			"Abbreviation" : "degK",
-			"Aspect" : {
-				"__type" : "PhysicalQuantity:http://sensor.nevada.edu/Measurement/2012/05",
-				"Id" : 55,
-				"Name" : "Temperature"
+	#to check the function with a single logical sensor and data of a single single month.
+	'''
+	logicalSensors = [{
+			"__type" : "LogicalSensor:http://sensor.nevada.edu/Measurement/2012/05",
+			"Deployment" : {
+				"__type" : "MonitoringDeployment:http://sensor.nevada.edu/Measurement/2012/05",
+				"Id" : 204,
+				"LocationWkt" : "POINT (-114.308911645998 38.9061140862817 3353.4096)",
+				"Name" : "Air temperature (10-meter) monitor",
+				"Site" : {
+					"__type" : "MonitoringSite:http://sensor.nevada.edu/Measurement/2012/05",
+					"Id" : 8,
+					"Name" : "Snake Range West Subalpine"
+				}
 			},
-			"Id" : 99,
-			"Name" : "degree kelvin"
-		}
-}]
+			"Id" : 1088,
+			"LocationWkt" : "POINT (-114.308911645998 38.9061140862817 3353.4096)",
+			"MeasurementInterval" : "PT1M",
+			"MonitoredProperty" : {
+				"__type" : "PhysicalProperty:http://sensor.nevada.edu/Measurement/2012/05",
+				"Description" : "The temperature of the air.",
+				"Id" : 3,
+				"Name" : "Temperature",
+				"System" : {
+					"__type" : "MonitoredSystem:http://sensor.nevada.edu/Measurement/2012/05",
+					"Id" : 4,
+					"Name" : "Atmosphere"
+				}
+			},
+			"SurfaceAltitudeOffset" : 10,
+			"Type" : {
+				"__type" : "MeasurementType:http://sensor.nevada.edu/Measurement/2012/05",
+				"Description" : "The average of a series of automatically-collected sensor measurements over a period of time.",
+				"Id" : 2,
+				"Name" : "Average"
+			},
+			"Unit" : {
+				"__type" : "MeasurementUnit:http://sensor.nevada.edu/Measurement/2012/05",
+				"Abbreviation" : "degK",
+				"Aspect" : {
+					"__type" : "PhysicalQuantity:http://sensor.nevada.edu/Measurement/2012/05",
+					"Id" : 55,
+					"Name" : "Temperature"
+				},
+				"Id" : 99,
+				"Name" : "degree kelvin"
+			}
+	}]
 
-getDataMonthly(2014,1,2014,3,logicalSensors)
-'''
+	getDataMonthly(2014,1,2014,3,logicalSensors)
+	'''
