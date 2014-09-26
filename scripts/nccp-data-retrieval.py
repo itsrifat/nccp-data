@@ -62,7 +62,7 @@ def getData(UTCTimestampFrom,UTCTimestampTo,timeZone,sensorId,unitId,totalResult
 	    data.extend(response['d'])
 
 	return data
-    
+
 def dateStrToISODate(dateStr,timeZone):
 	'''
 	    the date format is something like /Date(1388563260000-0800)/
@@ -111,7 +111,7 @@ def getDataMonthly(startYear,startMonth,endYear,endMonth,logicalSensors):
 	for dt in rrule.rrule(rrule.MONTHLY, dtstart=datetime(startYear,startMonth,1,0,0,0), until=datetime(endYear,endMonth,1,1,1)):
 	    #starting time (example 2014-01-01 00:00:00)
 	    startDate = dt
-	    endDate = dt+monthdelta.MonthDelta(1)- timedelta(minutes=1)
+	    endDate = dt+monthdelta.monthdelta(1)- timedelta(minutes=1)
 	    startTime = getUTCTimestamp(startDate)
 	    #ending time (example 2014-01-31 23:59:00)
 	    endTime = getUTCTimestamp(endDate)
@@ -126,14 +126,14 @@ def getDataMonthly(startYear,startMonth,endYear,endMonth,logicalSensors):
 		        fileName = str(startDate.year)+'-'+str(startDate.month)+'-'+str(sensor['Id'])+'-'+str(sensor['Unit']['Id'])
 		        #dump the data to a file
 		        dumpData(fileName,sensor,timeZoneUTC,data)
-	       	
+
 
 
 
 if __name__ == "__main__":
 	#Get all the posible sensors
 	logicalSensors = getLogicalSensorInfo()
-	
+
 	'''
 	Grabs data for each month, for each sensor.
 	Dumps the data in a directory named data.
