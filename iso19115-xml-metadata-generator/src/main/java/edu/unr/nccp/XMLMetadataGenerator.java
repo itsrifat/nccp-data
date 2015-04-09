@@ -7,9 +7,9 @@ import org.apache.sis.internal.jaxb.gmi.MI_Metadata;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Date;
 import java.util.Properties;
 
+import org.apache.commons.io.FilenameUtils;
 /**
  * Author: Moinul Hossain
  * date: 9/26/2014
@@ -46,14 +46,9 @@ public class XMLMetadataGenerator {
     try {
       for (File metadataFile: metadataFiles){
         LOGGER.info("Creating metadata file for "+metadataFile.getAbsolutePath());
-        String dateAndSensorId[] =  metadataFile.getName().split("-");
-        //String date = dateAndSensorId[0] + dateAndSensorId[1] + "-01";
-        //String sensorId = dateAndSensorId[2];
-        //Properties properties = new Properties(props);
-        //properties.put("date",date);
-        //properties.put();
+        //String dateAndSensorId[] =  metadataFile.getName().split("-");
         MI_Metadata metadata = XMLMetadataGeneratorUtils.generateDefaultMI_Metadata(props,XMLMetadataGeneratorUtils.readFileContent(metadataFile));
-        String outputFileName = outputDir+"/"+metadataFile.getName()+".xml";
+        String outputFileName = outputDir+"/"+FilenameUtils.removeExtension(metadataFile.getName())+".xml";
         XMLMetadataGeneratorUtils.marshalXml(metadata,outputFileName);
       }
     }catch (URISyntaxException e){
