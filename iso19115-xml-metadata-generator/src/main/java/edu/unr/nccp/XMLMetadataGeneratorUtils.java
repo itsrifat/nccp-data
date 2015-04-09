@@ -70,7 +70,7 @@ public class XMLMetadataGeneratorUtils {
    * @return
    * @throws URISyntaxException
    */
-  public static MI_Metadata generateDefaultMI_Metadata(Properties props) throws URISyntaxException {
+  public static MI_Metadata generateDefaultMI_Metadata(Properties props, String mainMetadata) throws URISyntaxException {
     MI_Metadata metadata = new MI_Metadata();
     metadata.setLanguage(Locale.ENGLISH);
     metadata.setCharacterSet(CharacterSet.UTF_8);
@@ -133,7 +133,7 @@ public class XMLMetadataGeneratorUtils {
     identification.setLanguages(langs);
 
     DefaultCitation citation = new DefaultCitation();
-    citation.setTitle(new SimpleInternationalString("Site 3 meta"));
+    citation.setTitle(new SimpleInternationalString("NCCP Data"));
 
     List dates = new CheckedArrayList(DefaultCitationDate.class);
     DefaultCitationDate citationDate = new DefaultCitationDate();
@@ -147,7 +147,7 @@ public class XMLMetadataGeneratorUtils {
 
     identification.setCitation(citation);
 
-    identification.setAbstract(new SimpleInternationalString("Abstract"));
+    identification.setAbstract(new SimpleInternationalString(mainMetadata));
 
     identificationInfo.add(identification);
 
@@ -199,6 +199,28 @@ public class XMLMetadataGeneratorUtils {
       }
     });
 
+  }
+  public static String readFileContent(File f) throws FileNotFoundException,IOException{
+    BufferedReader br = new BufferedReader(new FileReader(f));
+    StringBuilder sb= new StringBuilder();
+    try {
+
+      String line = br.readLine();
+
+      while (line != null) {
+        sb.append(line);
+        sb.append("\n");
+        line = br.readLine();
+      }
+      //return sb.toString();
+    } catch(IOException e){
+      LOGGER.error(e);
+    }
+    finally {
+      br.close();
+    }
+
+    return sb.toString();
   }
 
 }
