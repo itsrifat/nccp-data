@@ -6,4 +6,4 @@ To build the module: `mvn clean compile assembly:single`. It will create an exec
 
 A `defaluts.properties` file should be present in the execution directory to run the executable jar.
 
-T orun the executable jar: `java -jar iso19115-xml-gen.jar inputdirectory outputDirectory`
+To run the executable jar: `java -jar iso19115-xml-gen.jar inputdirectory outputDirectory`
