@@ -1,22 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Configuration packages="edu.unr.nccp">
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration>
+  <Properties>
+    <Property name="fileName">iso19115-xml-gen.log</Property>
+  </Properties>
   <Appenders>
     <Console name="Console" target="SYSTEM_OUT">
       <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
     </Console>
-    <File name="fileLog" fileName="logs">
+    <File name="File" fileName="${fileName}">
       <PatternLayout>
-        <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+        <pattern>%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</pattern>
       </PatternLayout>
     </File>
   </Appenders>
   <Loggers>
-    <Root level="INFO">
-      <AppenderRef ref="fileLog"/>
-    </Root>
-    <Root level="DEBUG">
+    <Root level="debug">
       <AppenderRef ref="Console"/>
+      <AppenderRef ref="File"/>
     </Root>
   </Loggers>
-
 </Configuration>
