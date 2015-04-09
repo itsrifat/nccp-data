@@ -200,7 +200,7 @@ public class XMLMetadataGeneratorUtils {
     });
 
   }
-  public static String readFileContent(File f) throws FileNotFoundException,IOException{
+  public static String readFileContent(File f) throws IOException{
     BufferedReader br = new BufferedReader(new FileReader(f));
     StringBuilder sb= new StringBuilder();
     try {
@@ -211,6 +211,28 @@ public class XMLMetadataGeneratorUtils {
         sb.append(line);
         sb.append("\n");
         line = br.readLine();
+      }
+    } catch(IOException e){
+      LOGGER.error(e);
+    }
+    finally {
+      br.close();
+    }
+
+    return sb.toString();
+  }
+  public static String readFileContent(File f,int numLines) throws IOException{
+    BufferedReader br = new BufferedReader(new FileReader(f));
+    StringBuilder sb= new StringBuilder();
+    try {
+
+      String line = br.readLine();
+      int i=0;
+      while (i<numLines && line != null) {
+        sb.append(line);
+        sb.append("\n");
+        line = br.readLine();
+        i++;
       }
       //return sb.toString();
     } catch(IOException e){

@@ -1,5 +1,7 @@
 package edu.unr.nccp;
 
+import com.beust.jcommander.JCommander;
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.sis.internal.jaxb.gmi.MI_Metadata;
@@ -18,25 +20,30 @@ public class XMLMetadataGenerator {
   private static final Logger LOGGER = LogManager.getLogger("XMLMetadataGenerator");
   public static void main(String[] args) {
 
-    String inputDir = "data-metadata";
-    String outputDir = "data-metadata-output";
-
-    if(args.length!=2){
-      LOGGER.error("Please provide input and output directory");
+    CommandLineParser clp = new CommandLineParser();
+    JCommander jc = new JCommander(clp,args);
+    if(StringUtils.isEmpty(clp.inputDir) || StringUtils.isEmpty(clp.outputDir)
+        || StringUtils.isEmpty(clp.inputFileExt) || clp.lines==null){
+      jc.usage();
       return;
     }
+    String inputDir;
+    String outputDir;
+    String inFileExt = clp.inputFileExt;
+    Integer numLines;
 
-    inputDir = args[0];
-    outputDir = args[1];
+    inputDir = clp.inputDir;
+    outputDir = clp.outputDir;
+    numLines = clp.lines;
 
-
-    /*Load the static tet values */
+    LOGGER.info("Command line arguments loaded");
+    LOGGER.info(inputDir+" "+outputDir+" "+numLines);
     Properties props = XMLMetadataGeneratorUtils.readDefaultProperties();
     Properties overriddenProps = XMLMetadataGeneratorUtils.readProperties("defaults.properties");
     props.putAll(overriddenProps);
 
-    /* Load the metadata files */
-    File[] metadataFiles = XMLMetadataGeneratorUtils.getMetadataFiles(inputDir, "metadata");
+    LOGGER.info("Reading input files and creating xml metadata files");
+    File[] metadataFiles = XMLMetadataGeneratorUtils.getMetadataFiles(inputDir, inFileExt);
     File output = new File(outputDir);
 
     if(!output.exists()){
@@ -47,7 +54,7 @@ public class XMLMetadataGenerator {
       for (File metadataFile: metadataFiles){
         LOGGER.info("Creating metadata file for "+metadataFile.getAbsolutePath());
         //String dateAndSensorId[] =  metadataFile.getName().split("-");
-        MI_Metadata metadata = XMLMetadataGeneratorUtils.generateDefaultMI_Metadata(props,XMLMetadataGeneratorUtils.readFileContent(metadataFile));
+        MI_Metadata metadata = XMLMetadataGeneratorUtils.generateDefaultMI_Metadata(props,XMLMetadataGeneratorUtils.readFileContent(metadataFile,numLines));
         String outputFileName = outputDir+"/"+FilenameUtils.removeExtension(metadataFile.getName())+".xml";
         XMLMetadataGeneratorUtils.marshalXml(metadata,outputFileName);
       }
