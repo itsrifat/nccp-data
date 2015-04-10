@@ -8,8 +8,9 @@ all we need to do is call the function ```getDataMonthly``` s follows:
 
 #it gets a list of logicalSensor objects
 logicalSensors = getLogicalSensorInfo()
-#here starting month is Janury 2012, ending month is December 2014
-getDataMonthly(2012,1,2014,12,logicalSensors)
+#It retrieves a csv file of monthly data of each logical sensor and dumps in outputDir
+outputDir = 'data'
+getDataMonthly(2012,1,2014,12,logicalSensors,outputDir)
 
 ```
 
