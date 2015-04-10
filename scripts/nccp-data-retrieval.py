@@ -81,8 +81,8 @@ def dateStrToISODate(dateStr,timeZone):
 	#return the date in iso format
 	return dt.isoformat()
 
-def dumpData(filename,sensorMetadata,timeZoneMetadata,data):
-	directoryName = "data" #directory where all the files are stored
+def dumpData(outputDir,filename,sensorMetadata,timeZoneMetadata,data):
+	directoryName = outputDir #directory where all the files are stored
 	if not os.path.exists(directoryName):
 	    os.makedirs(directoryName)
 
@@ -106,12 +106,12 @@ def dumpData(filename,sensorMetadata,timeZoneMetadata,data):
 			f.write('\n')
 
 
-def getDataMonthly(startYear,startMonth,endYear,endMonth,logicalSensors):
+def getDataMonthly(startYear,startMonth,endYear,endMonth,logicalSensors,outputDir):
 	#iterate through each month ()
 	for dt in rrule.rrule(rrule.MONTHLY, dtstart=datetime(startYear,startMonth,1,0,0,0), until=datetime(endYear,endMonth,1,1,1)):
 	    #starting time (example 2014-01-01 00:00:00)
 	    startDate = dt
-	    endDate = dt+monthdelta.monthdelta(1)- timedelta(minutes=1)
+	    endDate = dt+monthdelta.MonthDelta(1)- timedelta(minutes=1)
 	    startTime = getUTCTimestamp(startDate)
 	    #ending time (example 2014-01-31 23:59:00)
 	    endTime = getUTCTimestamp(endDate)
@@ -125,13 +125,14 @@ def getDataMonthly(startYear,startMonth,endYear,endMonth,logicalSensors):
 		        data = getData(startTime,endTime,timeZoneUTC,sensor['Id'],sensor['Unit']['Id'],totalResults=numResults)
 		        fileName = str(startDate.year)+'-'+str(startDate.month)+'-'+str(sensor['Id'])+'-'+str(sensor['Unit']['Id'])
 		        #dump the data to a file
-		        dumpData(fileName,sensor,timeZoneUTC,data)
+		        dumpData(outputDir,fileName,sensor,timeZoneUTC,data)
 
 
 
 
 if __name__ == "__main__":
 	#Get all the posible sensors
+	outputDir = 'data'
 	logicalSensors = getLogicalSensorInfo()
 
 	'''
@@ -141,7 +142,7 @@ if __name__ == "__main__":
 	file format is year-month-sensorId-unitId.csv (example 2011-1-1088-96.csv).
 	This one gets the data from January 2011 to June 2014.
 	'''
-	getDataMonthly(2011,1,2014,6,logicalSensors)
+	getDataMonthly(2015,1,2015,1,logicalSensors,outputDir)
 
 
 	#to check the function with a single logical sensor and data of a single single month.
