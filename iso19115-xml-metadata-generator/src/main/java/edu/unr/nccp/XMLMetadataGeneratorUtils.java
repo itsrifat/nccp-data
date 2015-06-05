@@ -193,7 +193,7 @@ public class XMLMetadataGeneratorUtils {
     File dir = new File(directoryPath);
 
     return dir.listFiles(new FilenameFilter() {
-      @Override
+      //@Override
       public boolean accept(File dir, String name) {
         return name.toLowerCase().endsWith(fileExtension);
       }
