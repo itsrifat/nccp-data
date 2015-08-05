@@ -11,4 +11,4 @@ To run the executable jar: `java -jar iso19115-xml-gen.jar -indir indir -infilee
 Example: `java -jar iso19115-xml-gen.jar -indir /home/mdmoinulh/nrdc_dataone/raw_data -infileext csv -outdir /home/mdmoinulh/nrdc_dataone/raw_data -lines 10`
 
 
-The jar assumes all input files to be in a flat directory. It creates **iso19115 xml** for each of the file in the **indir** (with extension **infileext**) to the output dir **outdir**. I t assumes first n lines (specified with **lines** argument) of the input file contains metadata of the file
+The jar creates **iso19115 xml** for each of the file in the **indir** (with extension **infileext**) to the output dir **outdir**. I t assumes first n lines (specified with **lines** argument) of the input file contains metadata of the file
