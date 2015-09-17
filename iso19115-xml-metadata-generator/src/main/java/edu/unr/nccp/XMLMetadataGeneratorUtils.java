@@ -161,6 +161,9 @@ public class XMLMetadataGeneratorUtils {
     dates.add(citationDate);
     citation.setDates(dates);
     //citation.setEditionDate(new Date());
+
+
+/*
     List extents = new CheckedArrayList(DefaultExtent.class);
     DefaultExtent extent = new DefaultExtent();
 
@@ -208,6 +211,7 @@ public class XMLMetadataGeneratorUtils {
     temporalElements.add(temporalExtent);
     extent.setTemporalElements(temporalElements);
     extents.add(extent);
+*/
 
     //set the keywords
     List keyWordsList = new CheckedArrayList(DefaultKeywords.class);
