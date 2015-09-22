@@ -2,14 +2,9 @@ package edu.unr.nccp;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.sis.internal.geoapi.temporal.Instant;
-import org.apache.sis.internal.geoapi.temporal.Period;
-import org.apache.sis.internal.geoapi.temporal.Position;
 import org.apache.sis.internal.jaxb.gmi.MI_Metadata;
 import org.apache.sis.internal.util.CheckedArrayList;
 import org.apache.sis.metadata.iso.citation.*;
-import org.apache.sis.metadata.iso.extent.DefaultExtent;
-import org.apache.sis.metadata.iso.extent.DefaultTemporalExtent;
 import org.apache.sis.metadata.iso.identification.DefaultDataIdentification;
 import org.apache.sis.metadata.iso.identification.DefaultKeywords;
 import org.apache.sis.util.collection.CodeListSet;
@@ -27,8 +22,6 @@ import javax.xml.bind.Marshaller;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -163,6 +156,7 @@ public class XMLMetadataGeneratorUtils {
     //citation.setEditionDate(new Date());
 
 
+
 /*
     List extents = new CheckedArrayList(DefaultExtent.class);
     DefaultExtent extent = new DefaultExtent();
@@ -232,13 +226,13 @@ public class XMLMetadataGeneratorUtils {
 
     identification.setCitation(citation);
     identification.setAbstract(new SimpleInternationalString(abstractStr));
-    identification.setExtents(extents);
+    //identification.setExtents(extents);
+
     identification.setDescriptiveKeywords(keyWordsList);
 
     identificationInfo.add(identification);
 
     metadata.setIdentificationInfo(identificationInfo);
-
 
 
     return metadata;
