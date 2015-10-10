@@ -259,7 +259,7 @@ def sync_file(client,db_conn,file_loc,file_name):
             update_object_on_member_node(client, obj_in_gmn.pid, file_path,new_pid, FORMAT_IDS['data'])
             new_pid_metadata = generate_pid(db_conn,file_name,'metadata')
             #print 'new meetadata pid', new_pid_metadata
-            update_object_on_member_node(client, obj_in_gmn.pid_metadata, metafile_path,new_pid_metadata, FORMAT_IDS['data'])
+            update_object_on_member_node(client, obj_in_gmn.pid_metadata, metafile_path,new_pid_metadata, FORMAT_IDS['metadata'])
             new_pid_package = generate_pid(db_conn,file_name,'package')
             update_package_on_member_node(client, obj_in_gmn.pid_package,new_pid_package, new_pid_metadata, new_pid)
 
