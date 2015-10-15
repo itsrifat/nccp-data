@@ -170,7 +170,7 @@ def create_package_on_member_node(client, package_pid, metadata_file_pid, data_f
 def update_package_on_member_node(client, package_pid,package_pid_new, metadata_file_pid, data_file_pid):
     pids = []
     pids.append(data_file_pid)
-    resource_map = create_resource_map_for_pids(package_pid, metadata_file_pid, pids)
+    resource_map = create_resource_map_for_pids(package_pid_new, metadata_file_pid, pids)
     sys_meta = generate_system_metadata_for_object(package_pid_new,FORMAT_IDS['package'], resource_map)
     client.update(package_pid, StringIO.StringIO(resource_map),package_pid_new, sys_meta)
 
