@@ -33,14 +33,15 @@ NCCP_FILE_IDENTIFIER_PREFIX = 'NRDC_NCCP'
 DATAONE_OBJECT_TYPES = {'data':'SCIENCE_OBJECT','metadata':'SCIENCE_METADATA','package':'RESOURCE_MAP'}
 DATAONE_OBJECT_TYPES_ESXTENSION = {'data':'csv','metadata':'xml','package':'xml'}
 FORMAT_IDS = {'data':'text/csv','metadata':'http://www.isotc211.org/2005/gmd','package':'http://www.openarchives.org/ore/terms'}
-SYSMETA_RIGHTSHOLDER = 'CN=CA for GMN Client Side Certificates,O=NRDC,C=US,DC=cilogon,DC=org'
+#SYSMETA_RIGHTSHOLDER = 'CN=CA for GMN Client Side Certificates,O=NRDC,C=US,DC=cilogon,DC=org'
+SYSMETA_RIGHTSHOLDER='CN=localClient,O=NRDC,ST=NV,C=US'
 # BaseURL for the Member Node. If the script is run on the same server as the Member Node, this can be localhost
 MN_BASE_URL = 'https://localhost/mn'
 #Root url for the co-ordinating node
 CN_ROOT_URL = 'https://cn-stage.test.dataone.org/cn'
 #certificates
-CERTIFICATE_FOR_CREATE = '/var/local/dataone/certs/client/client_cert.pem'
-CERTIFICATE_FOR_CREATE_KEY = '/var/local/dataone/certs/client/client_key_nopassword.pem'
+CERTIFICATE_FOR_CREATE = '/var/local/dataone/certs/client/client_cert_local.pem'
+CERTIFICATE_FOR_CREATE_KEY = '/var/local/dataone/certs/client/client_key_nopassword_local.pem'
 
 ## nrdc specific
 SCIENCE_OBJECTS_DIR_PATH_REMOTE = '/mnt/nrdc-public-ftp/Aggregated Data/Walker Basin Climate'
@@ -49,7 +50,7 @@ FILE_EXT = 'csv'
 METAFILE_EXT = 'xml'
 NCCP_DATA_INTERVAL_TYPES=['OneMin','TenMin']
 DEFAULT_FILE_VERSION = 1
-VERSION_DELIMITER = '::'
+VERSION_DELIMITER = '--v'
 ## metadata generation specific
 JAR_FILE_LOC = 'iso19115-xml-gen.jar'
 META_OUTFILE_DIR = 'metadata'
